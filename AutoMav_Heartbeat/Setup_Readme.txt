@@ -164,6 +164,18 @@ https://github.com/ArduPilot/MAVProxy
 ------------------------------
 ##To run script
 python file.py --connect /dev/tts0
-
-
-	
+----------------------------------
+## Dronekit Python Autostart on Pi and Pixhawk
+Make a sh file containing:
+sleep 60
+cd /path/to/folder
+python file.py --connect /dev/ttyS0
+**can use /usr/bin/python instead of python, above.
+------------------------------------------------------
+## To counter GPS HDOP error and GPS speed error:
+set param GPS_HDOP_GOOD 500
+set Geofence off
+set ARMING_CHECK 1998 / 2003.
+set EK2_GPS_CHECK: 27.
+**Alternative method is to manually edit the GPS_Info() class.
+-----------------------------------------------------------

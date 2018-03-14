@@ -1,15 +1,24 @@
+# Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
+
+# Script for Takeoff to x metres, sleep for a while, and then auto land.
+
+# Last modified by : Robosid
+# Last modifed on : 03 / 13 / 2018
+
+
+
 from dronekit import connect, VehicleMode, LocationGlobalRelative
 from pymavlink import mavutil
 import time
 
 import argparse  
 parser = argparse.ArgumentParser()
-parser.add_argument('--connect', default='127.0.0.1:14550')
+parser.add_argument('--connect', default='/dev/ttyS0')
 args = parser.parse_args()
 
 # Connect to the Vehicle
 print 'Connecting to vehicle on: %s' % args.connect
-vehicle = connect(args.connect, baud=57600, wait_ready=True)
+vehicle = connect(args.connect, baud=921600, wait_ready=True)
 
 # Function to arm and then takeoff to a user specified altitude
 def arm_and_takeoff(aTargetAltitude):
@@ -46,8 +55,8 @@ arm_and_takeoff(20)
 
 print("Take off complete")
 
-# Hover for 10 seconds
-time.sleep(10)
+# Hover for 7 seconds
+time.sleep(7)
 
 print("Now let's land")
 vehicle.mode = VehicleMode("LAND")

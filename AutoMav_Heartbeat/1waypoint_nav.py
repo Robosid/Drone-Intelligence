@@ -1,17 +1,26 @@
+# Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
+
+# Script for Takeoff to x metres, travel to a predefined waypoint, sleep for a while, and then auto RTL.
+
+# Last modified by : Robosid
+# Last modifed on : 03 / 14 / 2018
+
+
+
 from dronekit import connect, VehicleMode, LocationGlobalRelative
 import time
 
 #-- Connect to the vehicle
 import argparse
 parser = argparse.ArgumentParser(description='commands')
-parser.add_argument('--connect')
+parser.add_argument('--connect', default='/dev/ttyS0')
 args = parser.parse_args()
 
 connection_string = args.connect
 
 
 print("Connection to the vehicle on %s"%connection_string)
-vehicle = connect(connection_string, wait_ready=True)
+vehicle = connect(args.connect, baud=921600, wait_ready=True)
 
 #-- Define the function for takeoff
 def arm_and_takeoff(tgt_altitude):
@@ -51,7 +60,7 @@ wp1 = LocationGlobalRelative(35.9872609, -95.8753037, 10)
 
 vehicle.simple_goto(wp1)
 
-#--- Here is where you can add more action later
+#--- Here is where I can add more action later
 time.sleep(30)
 
 #--- Coming back
