@@ -1,7 +1,7 @@
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
 """
-Drone Delivery: Basic Version 
+Drone Delivery: Basic Version (State Machines. One for Vehicle and one for for Pi) 
 
 I am going to build a mission in mission planner/QGC, upload the mission to the drone.
 
