@@ -179,3 +179,10 @@ set ARMING_CHECK 1998 / 2003.
 set EK2_GPS_CHECK: 27.
 **Alternative method is to manually edit the GPS_Info() class.
 -----------------------------------------------------------
+## For countering GPS Vert Error and other appoximations:
+auto_Switch = blend
+blend_mask = 7
+ek2_check_scale = 200
+hdop = 800
+WPNAV_SPEED_UP
+-----------------------------------------------------------
