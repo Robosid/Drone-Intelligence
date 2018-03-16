@@ -1,7 +1,7 @@
 ##in QGC
 set parameters:
 Serial2_protocol=1
-Serial2_baud=921600/5600
+Serial2_baud=921600/115000
 log_backend_type=3 which is dataflash.
 
 sudo apt-get update    #Update the list of packages in the software center
@@ -76,10 +76,10 @@ sudo stty -F /dev/Serial0 1500000
 
 ## To Test
 sudo -s
-mavproxy.py --master=/dev/ttyAMA0 --baudrate 921600 --aircraft MyCopter
+mavproxy.py --master=/dev/ttyAMA0 --baudrate 115000 --aircraft MyCopter
 NOTE: change ttyAMA0 to Serial0, for jessie.
       change ttyAMA0 to ttyS0 for stretch
-	  change 57600 to 921600. keep 57600 if serial2_baud=57600.
+	  change 115000 to 921600. keep 152000 if serial2_baud=115000.
 
 ##Few test commands:
   Mode STABILIZE
@@ -163,7 +163,7 @@ https://github.com/ArduPilot/MAVProxy
 
 ------------------------------
 ##To run script
-python file.py --connect /dev/tts0
+python file.py --connect /dev/ttyS0
 ----------------------------------
 ## Dronekit Python Autostart on Pi and Pixhawk
 Make a sh file containing:

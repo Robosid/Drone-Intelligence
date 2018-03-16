@@ -14,7 +14,7 @@ When the mission is completed, RTL sequence is executed.
 
 
 # Last modified by : Robosid
-# Last modifed on : 03 / 14 / 2018
+# Last modifed on : 03 / 15 / 2018
 
 
 import time
