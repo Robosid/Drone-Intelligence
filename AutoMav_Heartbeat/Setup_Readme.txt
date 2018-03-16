@@ -184,5 +184,5 @@ auto_Switch = blend
 blend_mask = 7
 ek2_check_scale = 200
 hdop = 800
-WPNAV_SPEED_UP
+WPNAV_SPEED_UP = 30 // TO set takeoff speed.
 -----------------------------------------------------------
