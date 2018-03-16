@@ -16,8 +16,19 @@ import Tkinter as tk
 
 
 #-- Connect to the vehicle
-print('Connecting...')
-vehicle = connect('udp:127.0.0.1:14551')
+#print('Connecting...')
+#vehicle = connect('udp:127.0.0.1:14551')
+print(">>>> Connecting with the UAV <<<")
+import argparse
+parser = argparse.ArgumentParser(description='commands')
+parser.add_argument('--connect', default='/dev/ttyS0')
+args = parser.parse_args()
+
+connection_string = args.connect
+
+
+print("Connection to the vehicle on %s"%connection_string)
+vehicle = connect(args.connect, baud=921600, wait_ready=True)    #- wait_ready flag hold the program untill all the parameters are been read (=, not .)
 
 #-- Setup the commanded flying speed
 gnd_speed = 5 # [m/s]
