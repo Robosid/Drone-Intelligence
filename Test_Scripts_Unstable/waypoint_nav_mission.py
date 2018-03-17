@@ -1,23 +1,18 @@
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
 """
-Drone Delivery: Basic Version (State Machines. One for Vehicle and one for for Pi) 
 
-I am going to build a mission in mission planner/QGC, upload the mission to the drone.
-
-The script will connect with the vehicle and check if a new mission has been uploaded. 
-As soon as a valid mission is available, It will takeoff in GUIDED mode and then switch
-to AUTO.
-When the mission is completed, RTL sequence is executed.
+Waypoint Navigation using Missions, without the involvement of GCS.
+NOTE: In TEST phase. HIGHLY UNSTABLE. USE WITH CAUTION.
 
 """
 
 
 # Last modified by : Robosid
-# Last modifed on : 03 / 15 / 2018
-
+# Last modifed on : 03 / 17 / 2018
 
 import time
+import math
 from dronekit import connect, VehicleMode, LocationGlobalRelative, Command, LocationGlobal
 from pymavlink import mavutil
 
@@ -54,7 +49,7 @@ def clear_mission(vehicle):
     """
     cmds = vehicle.commands
     vehicle.commands.clear()
-    #vehicle.flush()  
+    #vehicle.flush() 
     cmds.upload()
 
     # After clearing the mission you MUST re-download the mission from the vehicle
@@ -64,45 +59,16 @@ def clear_mission(vehicle):
     cmds.download()
     cmds.wait_ready()
 
-def download_mission(vehicle):
-    """
-    Download the current mission from the vehicle.
-    """
-    cmds = vehicle.commands
-    cmds.download()
-    cmds.wait_valid() # wait until download is complete.
-    #cmds.wait_ready() # wait until download is complete.
-    
-
-def get_current_mission(vehicle):
-    """
-    Downloads the mission and returns the wp list and number of WP 
-    
-    Input: 
-        vehicle
-        
-    Return:
-        n_wp, wpList
-    """
-
-    print "Downloading mission"
-    download_mission(vehicle)
-    missionList = []
-    n_WP        = 0
-    for wp in vehicle.commands:
-        missionList.append(wp)
-        n_WP += 1 
-        
-    return n_WP, missionList
-    
-
 def add_last_waypoint_to_mission(                                       #--- Adds a last waypoint on the current mission file
         vehicle,            #--- vehicle object
         wp_Last_Latitude,   #--- [deg]  Target Latitude
         wp_Last_Longitude,  #--- [deg]  Target Longitude
         wp_Last_Altitude):  #--- [m]    Target Altitude
+    
     """
+    
     Upload the mission with the last WP as given and outputs the ID to be set
+    
     """
     # Get the set of commands from the vehicle
     cmds = vehicle.commands
@@ -110,9 +76,9 @@ def add_last_waypoint_to_mission(                                       #--- Add
     cmds.wait_ready()
 
     # Save the vehicle commands to a list
-    missionlist=[]
-    for cmd in cmds:
-        missionlist.append(cmd)
+    #missionlist=[]
+    #for cmd in cmds:
+    #    missionlist.append(cmd)
 
     # Modify the mission as needed. For example, here I change the
     wpLastObject = Command( 0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, 
@@ -121,25 +87,20 @@ def add_last_waypoint_to_mission(                                       #--- Add
 
     # Clear the current mission (command is sent when I call upload())
     cmds.clear()
+    vehicle.commands.clear()
 
     #Write the modified mission and flush to the vehicle
     for cmd in missionlist:
         cmds.add(cmd)
     cmds.upload()
     
-    return (cmds.count)    
+    return (cmds.count)
 
 def ChangeMode(vehicle, mode):
     while vehicle.mode != VehicleMode(mode):
             vehicle.mode = VehicleMode(mode)
             time.sleep(0.5)
     return True
-#--------------------------------------------------
-#-------------- INITIALIZE  
-#--------------------------------------------------      
-#-- Setup the commanded flying speed
-gnd_speed = 2 # [m/s]
-mode      = 'GROUND'
 
 #--------------------------------------------------
 #-------------- CONNECTION  
@@ -160,16 +121,37 @@ connection_string = args.connect
 print("Connection to the vehicle on %s"%connection_string)
 vehicle = connect(args.connect, baud=921600, wait_ready=True)    #- wait_ready flag hold the program untill all the parameters are been read (=, not .)
 
-
+#--------------------------------------------------
+#-------------- INITIALIZE  
+#--------------------------------------------------      
+#-- Setup the commanded flying speed
+gnd_speed = 2 # [m/s]
+mode      = 'GROUND'
+clear_mission(vehicle)
 #--------------------------------------------------
 #-------------- MAIN FUNCTION  
 #--------------------------------------------------    
 while True:
     
     if mode == 'GROUND':
-        #--- Wait until a valid mission has been uploaded
-        n_WP, missionList = get_current_mission(vehicle)
+
         time.sleep(2)
+        while True:
+
+        	# DO NOT add fake/home waypoint
+        	wp_flag = input("DO you want to push a waypoint onto the mission_stack? Press 'n' if you don't.") 
+        	
+        	if (wp_flag == 'n' or 'N'):
+        		break
+	        
+	        wp_lon = float(input("Please enter the Longitude of the next waypoint: "))
+	        wp_lat = float(input("Please enter the Latitude of the next waypoint: "))
+	        wp_alt = float(input("Please enter the Altitude of the next waypoint: "))
+	        
+	        add_last_waypoint_to_mission(vehicle, wp_lat, 
+	                                       wp_lon, 
+	                                       wp_alt)
+	    n_WP = 
         if n_WP > 0:
             print ("A valid mission has been uploaded: takeoff!")
             mode = 'TAKEOFF'
@@ -192,7 +174,7 @@ while True:
         #-- Change mode, set the ground speed
         vehicle.groundspeed = gnd_speed
         mode = 'MISSION'
-        print ("Swiitch mode to MISSION")
+        print ("Switch mode to MISSION")
         
     elif mode == 'MISSION':
         #-- Here I just monitor the mission status. Once the mission is completed I go back
@@ -220,56 +202,3 @@ while True:
     
     
     time.sleep(0.5)
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-      

@@ -72,7 +72,8 @@ def set_velocity_body(vehicle, vx, vy, vz):
             0, 0, 0,        #-- ACCELERATIONS
             0, 0)
     vehicle.send_mavlink(msg)
-    vehicle.flush()
+    #vehicle.flush() 
+    vehicle.commands.upload()
     
 
 def clear_mission(vehicle):
@@ -81,7 +82,8 @@ def clear_mission(vehicle):
     """
     cmds = vehicle.commands
     vehicle.commands.clear()
-    vehicle.flush()
+    #vehicle.flush() 
+    cmds.upload()
 
     # After clearing the mission I MUST re-download the mission from the vehicle
     # before vehicle.commands can be used again
@@ -172,7 +174,7 @@ def bearing_to_current_waypoint(vehicle):
 
 def get_bearing(my_location, tgt_location):
     """
-    Aproximation of the bearing for medium latitudes and sort distances
+    Aproximation of the bearing for medium latitudes and short distances
     """
     dlat = tgt_location.lat - my_location.lat
     dlong = tgt_location.lon - my_location.lon
@@ -230,7 +232,7 @@ def add_angles(ang1, ang2):
 #-------------- INITIALIZE  
 #--------------------------------------------------      
 #-- Setup the commanded flying speed
-gnd_speed = 8 # [m/s]
+gnd_speed = 3 # [m/s]
 radius    = 80
 max_lat_speed = 4
 k_err_vel   = 0.2
@@ -283,7 +285,8 @@ while True:
         mode = 'MISSION'
         vehicle.commands.next = 1
         
-        vehicle.flush()
+        #vehicle.flush() 
+        vehicle.commands.upload()
 
         #-- Calculate the time for n_turns
         time_flight = 2.0*math.pi*radius/gnd_speed*n_turns
