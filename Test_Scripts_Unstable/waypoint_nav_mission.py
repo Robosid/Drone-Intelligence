@@ -25,7 +25,7 @@ NOTE: In TEST phase. HIGHLY UNSTABLE. USE WITH CAUTION.
 
 
 # Last modified by : Robosid
-# Last modifed on : 03 / 17 / 2018
+# Last modifed on : 03 / 19 / 2018
 
 import time
 import math
@@ -186,10 +186,14 @@ while True:
       wp_lon = float(input("Please enter the Longitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.lon
       wp_lat = float(input("Please enter the Latitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.lat
       wp_alt = float(input("Please enter the Altitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.alt
-      
-      add_last_waypoint_to_mission(vehicle, wp_lat, 
-                                     wp_lon, 
-                                     wp_alt)
+      wp = LocationGlobalRelative(wp_lat,wp_lon,wp_alt)
+      add_last_waypoint_to_mission(vehicle, wp.lat, 
+                                     wp.lon, 
+                                     wp.alt)
+'''      add_last_waypoint_to_mission(vehicle, wp.lat, 
+                                     wp.lon, 
+                                     wp.alt)
+'''
       time.sleep(1)
     n_WP = get_number_wp(vehicle)
     if n_WP > 0:

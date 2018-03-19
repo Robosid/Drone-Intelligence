@@ -63,6 +63,17 @@ def arm_and_takeoff(tgt_altitude):
             
         time.sleep(1)
         
+def get_distance_metres(aLocation1, aLocation2):
+    """
+    Returns the ground distance in metres between two LocationGlobal objects.
+
+    This method is an approximation, and will not be accurate over large distances and close to the 
+    earth's poles. It comes from the ArduPilot test code: 
+    https://github.com/diydrones/ardupilot/blob/master/Tools/autotest/common.py
+    """
+    dlat = aLocation2.lat - aLocation1.lat
+    dlong = aLocation2.lon - aLocation1.lon
+    return math.sqrt((dlat*dlat) + (dlong*dlong)) * 1.113195e5
         
 #------ MAIN PROGRAM ----
 arm_and_takeoff(10)
@@ -72,6 +83,7 @@ vehicle.airspeed = 7
 
 def location_callback(self, attr_name, value):
     print(vehicle.location.global_relative_frame)
+#    print(vehicle.location.global_frame)
 
 wps = []
 
@@ -99,18 +111,24 @@ for i in wps:
   count = count + 1
   print ("go to wp", count)
   wp = LocationGlobalRelative(i[0], i[1], i[2])
-  ## simple_goto(location, airspeed=None, groundspeed=None)
+  ## simple_goto(location, airspeed=None, groundspeed=None) //Syntax
   vehicle.simple_goto(wp)
 
   ## TO get an idea about what 'vehicle.location.global_relative_frame' returns so that we can keep a 
   ## check for position/waypoint reach, before it starts out on its next waypoint. Precise or proximity check.
+  '''
   print("Adding a location listener, for testing")
   vehicle.add_attribute_listener('location.global_relative_frame', location_callback) #-- message type, callback function
   time.sleep(30)
+  '''
 
   #--- Here is where I can add more action later
-  time.sleep(30) # For safety sake. Not needed if the above time sleep works, or if I can incorporate Location check till waypoint reach.
-
+  #time.sleep(30) # For safety sake. Not needed if the above time sleep works, or if I can incorporate Location check till waypoint reach.
+  
+  distancetopoint = get_distance_metres(vehicle.location.global_frame, wp)
+  while not (distancetopoint < 1 and (vehicle.location.global_relative_frame.alt > wp.alt - 1  and vehicle.location.global_relative_frame.alt < wp.alt + 1 )) :
+    distancetopoint = get_distance_metres(vehicle.location.global_frame, wp)
+  
 #--- Coming back
 print("Coming back")
 vehicle.mode = VehicleMode("RTL")
