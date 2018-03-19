@@ -156,7 +156,12 @@ http://python.dronekit.io/guide/index.html
 https://github.com/mavlink/mavlink
 https://mavlink.io/en/
 http://ardupilot.org/dev/docs/mavlink-commands.html
+http://mavlink.org/messages/common
+http://ardupilot.org/dev/docs/copter-commands-in-guided-mode.html
 http://ardupilot.org/copter/docs/common-mavlink-mission-command-messages-mav_cmd.html
+
+## Ardu Parameter reference:
+http://ardupilot.org/copter/docs/parameters.html#parameters
 
 ## For MAVproxy Reference:
 https://github.com/ArduPilot/MAVProxy
