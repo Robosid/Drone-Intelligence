@@ -122,7 +122,7 @@ def key(event):
 #---- MAIN FUNCTION
 #- Takeoff
 arm_and_takeoff(10)
- 
+time.sleep(20)
 #- Read the keyboard with tkinter
 root = tk.Tk()
 print(">> Control the drone with the arrow keys. Press r for RTL mode")
