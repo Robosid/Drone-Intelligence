@@ -134,8 +134,8 @@ def get_number_wp(vehicle):
     cmds.wait_valid() # wait until download is complete.
     #cmds.wait_ready() # wait until download is complete.
 
-    n_WP        = 0
-    for wp in cmds:
+    n_WP = 0
+    for j in cmds:
         n_WP += 1 
         
     return n_WP
@@ -187,13 +187,9 @@ while True:
       wp_lat = float(input("Please enter the Latitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.lat
       wp_alt = float(input("Please enter the Altitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.alt
       wp = LocationGlobalRelative(wp_lat,wp_lon,wp_alt)
-      add_last_waypoint_to_mission(vehicle, wp.lat, 
-                                     wp.lon, 
-                                     wp.alt)
-'''      add_last_waypoint_to_mission(vehicle, wp.lat, 
-                                     wp.lon, 
-                                     wp.alt)
-'''
+      #add_last_waypoint_to_mission(vehicle, wp.lat, wp.lon, wp.alt)
+      add_last_waypoint_to_mission(vehicle, wp_lat, wp_lon, wp_alt)
+
       time.sleep(1)
     n_WP = get_number_wp(vehicle)
     if n_WP > 0:
