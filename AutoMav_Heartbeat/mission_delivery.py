@@ -197,6 +197,7 @@ while True:
         add_last_waypoint_to_mission(vehicle, vehicle.location.global_relative_frame.lat, 
                                        vehicle.location.global_relative_frame.lon, 
                                        vehicle.location.global_relative_frame.alt)
+        time.sleep(1)
         print("Home waypoint added to the mission")
         time.sleep(1)
         #-- Takeoff

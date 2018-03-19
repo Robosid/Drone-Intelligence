@@ -118,6 +118,28 @@ def ChangeMode(vehicle, mode):
             time.sleep(0.5)
     return True
 
+def get_number_wp(vehicle):
+    """
+    Downloads the mission and returns the wp list and number of WP 
+    
+    Input: 
+        vehicle
+        
+    Return:
+        n_wp, wpList
+    """
+
+    cmds = vehicle.commands
+    cmds.download()
+    cmds.wait_valid() # wait until download is complete.
+    #cmds.wait_ready() # wait until download is complete.
+
+    n_WP        = 0
+    for wp in cmds:
+        n_WP += 1 
+        
+    return n_WP
+
 #--------------------------------------------------
 #-------------- CONNECTION  
 #--------------------------------------------------    
@@ -149,72 +171,73 @@ clear_mission(vehicle)
 #--------------------------------------------------    
 while True:
     
-    if mode == 'GROUND':
+  if mode == 'GROUND':
 
-        time.sleep(2)
-        while True:
+    time.sleep(2)
+    while True:
 
-        	# DO NOT add fake/home waypoint
-        	wp_flag = input("DO you want to push a waypoint onto the mission_stack? Press 'n' if you don't.") 
-        	
-        	if (wp_flag == 'n' or 'N'):
-        		break
-	        
-	        wp_lon = float(input("Please enter the Longitude of the next waypoint: "))
-	        wp_lat = float(input("Please enter the Latitude of the next waypoint: "))
-	        wp_alt = float(input("Please enter the Altitude of the next waypoint: "))
-	        
-	        add_last_waypoint_to_mission(vehicle, wp_lat, 
-	                                       wp_lon, 
-	                                       wp_alt)
-	    n_WP = 
-        if n_WP > 0:
-            print ("A valid mission has been uploaded: takeoff!")
-            mode = 'TAKEOFF'
-            
-    elif mode == 'TAKEOFF':
-       
-        #-- Add a fake waypoint at the end of the mission
-        add_last_waypoint_to_mission(vehicle, vehicle.location.global_relative_frame.lat, 
-                                       vehicle.location.global_relative_frame.lon, 
-                                       vehicle.location.global_relative_frame.alt)
-        print("Home waypoint added to the mission")
-        time.sleep(1)
-        #-- Takeoff
-        arm_and_takeoff(10)
-        
-        #-- Change the UAV mode to AUTO
-        print("Changing to AUTO")
-        ChangeMode(vehicle,"AUTO")
-        
-        #-- Change mode, set the ground speed
-        vehicle.groundspeed = gnd_speed
-        mode = 'MISSION'
-        print ("Switch mode to MISSION")
-        
-    elif mode == 'MISSION':
-        #-- Here I just monitor the mission status. Once the mission is completed I go back
-        #-- vehicle.commands.cout is the total number of waypoints
-        #-- vehicle.commands.next is the waypoint the vehicle is going to
-        #-- once next == cout, I just go home
-        
-        print ("Current WP: %d of %d "%(vehicle.commands.next, vehicle.commands.count))
-        if vehicle.commands.next == vehicle.commands.count:
-            print ("Final waypoint reached: go back home")
-            #-- First I clear the flight mission
-            clear_mission(vehicle)
-            print ("Mission deleted")
-            
-            #-- I go back home
-            ChangeMode(vehicle,"RTL")
-            mode = "BACK"
-            
-    elif mode == "BACK":
-        if vehicle.location.global_relative_frame.alt < 1:
-            print ("Switch to GROUND mode, waiting for new missions")
-            mode = 'GROUND'
-    
-    
-    
-    
-    time.sleep(0.5)
+    	# DO NOT add fake/home waypoint
+    	wp_flag = input("DO you want to push a waypoint onto the mission_stack? Press 'n' if you don't.") 
+    	
+    	if (wp_flag == 'n' or 'N'):
+    		break
+      
+      wp_lon = float(input("Please enter the Longitude of the next waypoint: "))
+      wp_lat = float(input("Please enter the Latitude of the next waypoint: "))
+      wp_alt = float(input("Please enter the Altitude of the next waypoint: "))
+      
+      add_last_waypoint_to_mission(vehicle, wp_lat, 
+                                     wp_lon, 
+                                     wp_alt)
+      time.sleep(1)
+    n_WP = get_number_wp(vehicle)
+    if n_WP > 0:
+      print ("A valid mission has been uploaded: takeoff!")
+      mode = 'TAKEOFF'
+          
+  elif mode == 'TAKEOFF':
+     
+      #-- Add a fake waypoint at the end of the mission
+      add_last_waypoint_to_mission(vehicle, vehicle.location.global_relative_frame.lat, 
+                                     vehicle.location.global_relative_frame.lon, 
+                                     vehicle.location.global_relative_frame.alt)
+      print("Home waypoint added to the mission")
+      time.sleep(1)
+      #-- Takeoff
+      arm_and_takeoff(10)
+      
+      #-- Change the UAV mode to AUTO
+      print("Changing to AUTO")
+      ChangeMode(vehicle,"AUTO")
+      
+      #-- Change mode, set the ground speed
+      vehicle.groundspeed = gnd_speed
+      mode = 'MISSION'
+      print ("Switch mode to MISSION")
+      
+  elif mode == 'MISSION':
+      #-- Here I just monitor the mission status. Once the mission is completed I go back
+      #-- vehicle.commands.cout is the total number of waypoints
+      #-- vehicle.commands.next is the waypoint the vehicle is going to
+      #-- once next == cout, I just go home
+      
+      print ("Current WP: %d of %d "%(vehicle.commands.next, vehicle.commands.count))
+      if vehicle.commands.next == vehicle.commands.count:
+          print ("Final waypoint reached: go back home")
+          #-- First I clear the flight mission
+          clear_mission(vehicle)
+          print ("Mission deleted")
+          
+          #-- I go back home
+          ChangeMode(vehicle,"RTL")
+          mode = "BACK"
+          
+  elif mode == "BACK":
+      if vehicle.location.global_relative_frame.alt < 1:
+          print ("Switch to GROUND mode, waiting for new missions")
+          mode = 'GROUND'
+  
+  
+  
+  
+  time.sleep(0.5)
