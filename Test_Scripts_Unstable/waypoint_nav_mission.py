@@ -182,9 +182,10 @@ while True:
     	if (wp_flag == 'n' or 'N'):
     		break
       
-      wp_lon = float(input("Please enter the Longitude of the next waypoint: "))
-      wp_lat = float(input("Please enter the Latitude of the next waypoint: "))
-      wp_alt = float(input("Please enter the Altitude of the next waypoint: "))
+      # Positions in the form of Location in global frame, with altitude relative to the home location.
+      wp_lon = float(input("Please enter the Longitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.lon
+      wp_lat = float(input("Please enter the Latitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.lat
+      wp_alt = float(input("Please enter the Altitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.alt
       
       add_last_waypoint_to_mission(vehicle, wp_lat, 
                                      wp_lon, 

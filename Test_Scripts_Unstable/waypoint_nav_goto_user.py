@@ -16,7 +16,7 @@
 
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
-# Script for Takeoff to x metres, travel to a predefined waypoints, sleep for a while between every waypoint command, and then auto RTL.
+# Script for Takeoff to x metres, travel to waypoints defined by user, sleep for a while between every waypoint command, and then auto RTL.
 
 # Last modified by : Robosid
 # Last modifed on : 03 / 19 / 2018
@@ -73,50 +73,44 @@ vehicle.airspeed = 7
 def location_callback(self, attr_name, value):
     print(vehicle.location.global_relative_frame)
 
+wps = []
+
+time.sleep(2)
+while True:
+
+  wp_flag = input("DO you want to add a waypoint? Press 'n' if you don't.") 
+  
+  if (wp_flag == 'n' or 'N'):
+    break
+  # Positions in the form of Location in global frame, with altitude relative to the home location.
+  wp_lon = float(input("Please enter the Longitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.lon
+  k.append(wp_lon)
+  wp_lat = float(input("Please enter the Latitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.lat
+  k.append(wp_lat)
+  wp_alt = float(input("Please enter the Altitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.alt
+  k.append(wp_alt)
+  wps.append(k)
+  k = []
+  time.sleep(1)
 
 
-#-- Go to wp1
-print ("go to wp1")
-wp1 = LocationGlobalRelative(35.9872609, -95.8753037, 10)
+count = 0
+for i in wps:
+  count = count + 1
+  print ("go to wp", count)
+  wp = LocationGlobalRelative(i[0], i[1], i[2])
+  ## simple_goto(location, airspeed=None, groundspeed=None)
+  vehicle.simple_goto(wp)
 
-## simple_goto(location, airspeed=None, groundspeed=None)
-vehicle.simple_goto(wp1)
+  ## TO get an idea about what 'vehicle.location.global_relative_frame' returns so that we can keep a 
+  ## check for position/waypoint reach, before it starts out on its next waypoint. Precise or proximity check.
+  print("Adding a location listener, for testing")
+  vehicle.add_attribute_listener('location.global_relative_frame', location_callback) #-- message type, callback function
+  time.sleep(30)
 
-## TO get an idea about what 'vehicle.location.global_relative_frame' returns so that we can keep a 
-## check for position/waypoint reach, before it starts out on its next waypoint. Precise or proximity check.
-print("Adding a location listener, for testing")
-vehicle.add_attribute_listener('location.global_relative_frame', location_callback) #-- message type, callback function
-time.sleep(30)
+  #--- Here is where I can add more action later
+  time.sleep(30) # For safety sake. Not needed if the above time sleep works, or if I can incorporate Location check till waypoint reach.
 
-#--- Here is where I can add more action later
-time.sleep(30) # For safety sake. Not needed if the above time sleep works, or if I can incorporate Location check till waypoint reach.
-
-#-- Go to wp2
-print ("go to wp2")
-wp2 = LocationGlobalRelative(35.9872609, -95.8753037, 10)
-
-vehicle.simple_goto(wp2)
-
-#--- Here is where I can add more action later
-time.sleep(30)
-
-#-- Go to wp3
-print ("go to wp3")
-wp3 = LocationGlobalRelative(35.9872609, -95.8753037, 10)
-
-vehicle.simple_goto(wp3)
-
-#--- Here is where I can add more action later
-time.sleep(30)
-
-#-- Go to wp4
-print ("go to wp4")
-wp4 = LocationGlobalRelative(35.9872609, -95.8753037, 10)
-
-vehicle.simple_goto(wp4)
-
-#--- Here is where I can add more action later
-time.sleep(30)
 #--- Coming back
 print("Coming back")
 vehicle.mode = VehicleMode("RTL")
