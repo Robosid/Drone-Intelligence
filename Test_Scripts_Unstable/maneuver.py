@@ -15,10 +15,10 @@
 
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
-# Script for take off and control with arrow keys
+# Script for take off and control with directional velocity maneuver.
 
 # Last modified by : Robosid
-# Last modifed on : 03 / 14 / 2018
+# Last modifed on : 03 / 20 / 2018
 
 
 
@@ -94,26 +94,8 @@ def set_velocity_body(vehicle, vx, vy, vz):
             0, 0)
     vehicle.send_mavlink(msg)
     vehicle.flush()
-    
-    
-#-- Key event function
-def key(event):
-    if event.char == event.keysym: #-- standard keys
-        if event.keysym == 'r':
-            print("r pressed >> Set the vehicle to RTL")
-            vehicle.mode = VehicleMode("RTL")
-            
-    else: #-- non standard keys
-        if event.keysym == 'Up':
-            set_velocity_body(vehicle, gnd_speed, 0, 0)
-        elif event.keysym == 'Down':
-            set_velocity_body(vehicle,-gnd_speed, 0, 0)
-        elif event.keysym == 'Left':
-            set_velocity_body(vehicle, 0, -gnd_speed, 0)
-        elif event.keysym == 'Right':
-            set_velocity_body(vehicle, 0, gnd_speed, 0)
-    
-    
+        
+        
 #---- MAIN FUNCTION
 #- Takeoff
 arm_and_takeoff(5)

@@ -16,10 +16,10 @@
 
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
-# Script for Takeoff to x metres, travel to waypoints defined by user, sleep for a while between every waypoint command, and then auto RTL.
+# Script for Takeoff to x metres, travel to waypoints defined by user, calculate distance to waypoint with approximation, and then auto RTL.
 
 # Last modified by : Robosid
-# Last modifed on : 03 / 19 / 2018
+# Last modifed on : 03 / 20 / 2018
 
 
 
@@ -86,7 +86,7 @@ def location_callback(self, attr_name, value):
 #    print(vehicle.location.global_frame)
 
 wps = []
-
+k = []
 time.sleep(2)
 while True:
 

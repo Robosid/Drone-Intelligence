@@ -16,10 +16,11 @@
 
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
-# Script for Takeoff to x metres, travel to a predefined waypoints, sleep for a while between every waypoint command, and then auto RTL.
+# Script for Takeoff to x metres, travel to a predefined waypoints, use a location listener to see the return type of location class
+# to  sleep for a while between every waypoint command, and then auto RTL.
 
 # Last modified by : Robosid
-# Last modifed on : 03 / 19 / 2018
+# Last modifed on : 03 / 20 / 2018
 
 
 
@@ -74,7 +75,7 @@ def get_distance_metres(aLocation1, aLocation2):
     dlat = aLocation2.lat - aLocation1.lat
     dlong = aLocation2.lon - aLocation1.lon
     return math.sqrt((dlat*dlat) + (dlong*dlong)) * 1.113195e5
-       
+    
 #------ MAIN PROGRAM ----
 arm_and_takeoff(10)
 

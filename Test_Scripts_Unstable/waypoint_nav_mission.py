@@ -65,6 +65,7 @@ def clear_mission(vehicle):
     """
     cmds = vehicle.commands
     vehicle.commands.clear()
+    cmds.clear()
     #vehicle.flush() 
     cmds.upload()
 
@@ -187,8 +188,8 @@ while True:
       wp_lat = float(input("Please enter the Latitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.lat
       wp_alt = float(input("Please enter the Altitude of the next waypoint: ")) # in the form of vehicle.location.global_relative_frame.alt
       wp = LocationGlobalRelative(wp_lat,wp_lon,wp_alt)
-      #add_last_waypoint_to_mission(vehicle, wp.lat, wp.lon, wp.alt)
-      add_last_waypoint_to_mission(vehicle, wp_lat, wp_lon, wp_alt)
+      add_last_waypoint_to_mission(vehicle, wp.lat, wp.lon, wp.alt)
+      #add_last_waypoint_to_mission(vehicle, wp_lat, wp_lon, wp_alt)
 
       time.sleep(1)
     n_WP = get_number_wp(vehicle)
