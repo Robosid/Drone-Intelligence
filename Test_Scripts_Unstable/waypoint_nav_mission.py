@@ -93,9 +93,9 @@ def add_last_waypoint_to_mission(                                       #--- Add
     cmds.wait_ready()
 
     # Save the vehicle commands to a list
-    #missionlist=[]
-    #for cmd in cmds:
-    #    missionlist.append(cmd)
+    missionlist=[]
+    for cmd in cmds:
+        missionlist.append(cmd)
 
     # Modify the mission as needed. For example, here I change the
     wpLastObject = Command( 0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, 
@@ -105,6 +105,7 @@ def add_last_waypoint_to_mission(                                       #--- Add
     # Clear the current mission (command is sent when I call upload())
     cmds.clear()
     vehicle.commands.clear()
+    cmds.upload()
 
     #Write the modified mission and flush to the vehicle
     for cmd in missionlist:
