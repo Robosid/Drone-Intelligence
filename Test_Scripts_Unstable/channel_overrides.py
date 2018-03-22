@@ -16,7 +16,7 @@
 
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
-# This script Demonstrates how set and clear channel-override information.
+# This script showing how to set and clear channel-override information.
 
 # Last modified by : Robosid
 # Last modifed on : 03 / 22 / 2018

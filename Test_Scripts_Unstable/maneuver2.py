@@ -15,10 +15,10 @@
 
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
-# Script for take off and control with directional velocity maneuver.
+# Script for take off and control with directional velocity maneuver, but with send_global_velocity.
 
 # Last modified by : Robosid
-# Last modifed on : 03 / 20 / 2018
+# Last modifed on : 03 / 22 / 2018
 
 
 
