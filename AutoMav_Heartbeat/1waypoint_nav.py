@@ -38,7 +38,7 @@ connection_string = args.connect
 
 
 print("Connection to the vehicle on %s"%connection_string)
-vehicle = connect(args.connect, baud=921600, wait_ready=True)
+vehicle = connect(args.connect, baud=115200, wait_ready=True)
 
 #-- Define the function for takeoff
 def arm_and_takeoff(tgt_altitude):
