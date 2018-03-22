@@ -17,6 +17,7 @@
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
 # This script is a maneuver master script which shows how to move/direct Copter and send commands in GUIDED mode.
+# is a collection of most maneuver techniques required for my purpose.
 
 # Last modified by : Robosid
 # Last modifed on : 03 / 22 / 2018
