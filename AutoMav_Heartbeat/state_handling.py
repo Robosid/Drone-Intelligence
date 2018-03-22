@@ -29,7 +29,7 @@
 from __future__ import print_function
 from dronekit import connect, VehicleMode
 import time
-
+'''
 #Set up option parsing to get connection string
 import argparse  
 parser = argparse.ArgumentParser(description='Print out vehicle state information. Connects to SITL on local PC by default.')
@@ -46,12 +46,19 @@ if not connection_string:
     import dronekit_sitl
     sitl = dronekit_sitl.start_default()
     connection_string = sitl.connection_string()
+'''
+
+#-- Connect to the vehicle
+import argparse
+parser = argparse.ArgumentParser(description='commands')
+parser.add_argument('--connect', default='/dev/ttyS0')
+args = parser.parse_args()
+
+connection_string = args.connect
 
 
-# Connect to the Vehicle. 
-#   Set `wait_ready=True` to ensure default attributes are populated before `connect()` returns.
-print("\nConnecting to vehicle on: %s" % connection_string)
-vehicle = connect(connection_string, wait_ready=True)
+print("Connection to the vehicle on %s"%connection_string)
+vehicle = connect(args.connect, baud=921600, wait_ready=True)
 
 vehicle.wait_ready('autopilot_version')
 
