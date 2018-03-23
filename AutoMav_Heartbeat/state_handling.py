@@ -197,7 +197,7 @@ def decorated_mode_callback(self, attr_name, value):
 print(" Set mode=STABILIZE (currently: %s) and wait for callback" % vehicle.mode.name) 
 vehicle.mode = VehicleMode("STABILIZE")
 
-print(" Wait 2s so callback invoked before moving to next example")
+print(" Wait 2s so callback invoked before moving to next")
 time.sleep(2)
 
 print("\n Attempt to remove observer added with `on_attribute` decorator (should fail)") 

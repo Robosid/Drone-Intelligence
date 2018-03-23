@@ -119,7 +119,7 @@ def set_attitude(roll_angle = 0.0, pitch_angle = 0.0, yaw_rate = 0.0, thrust = 0
     """
     
     """
-    The roll and pitch rate cannot be controllbed with rate in radian in AC3.4.4 or earlier,
+    The roll and pitch rate cannot be controlled with rate in radian in AC3.4.4 or earlier,
     so you must use quaternion to control the pitch and roll for those vehicles.
     """
     

@@ -188,7 +188,7 @@ if sitl is not None:
 
 
 print("\nShow original and uploaded/downloaded files:")
-#Print original file (for demo purposes only)
+#Print original file (for test purposes only)
 printfile(import_mission_filename)
-#Print exported file (for demo purposes only)
+#Print exported file (for test purposes only)
 printfile(export_mission_filename)
