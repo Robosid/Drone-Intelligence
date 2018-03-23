@@ -7,21 +7,21 @@ Software Design
 ---------------
 ![Network Diagram](img/Network_Diagram.jpg "Network Diagram")
 
-**Figure 7 Network Diagram**
+**Figure 1 Network Diagram**
 
 ![Interface Design Description](img/quadcopter_SW_BD.jpg "Interface Design")
 
-**Figure 8 Interface Design Description**
+**Figure 2 Interface Design Description**
 
 ![Ardupilot Software Block Diagram](img/arduPilot_block_diagram.jpg "Block Diagram")
 
-**Figure 8 Ardupilot software block diagram**
+**Figure 3 Ardupilot software block diagram**
 
 ![Take off Software Block Diagram](http://i.imgur.com/voCKQRu.png?1 "Take Off Block Diagram")
 
-**Figure 9 Take Off Software Block Diagram**
+**Figure 4 Take Off Software Block Diagram**
 
-### Source Lines of Code
+### Source Lines of Code for Basic Flight Test
 #### Pre-arm Checks
 Arming the vehicle turns on the motors for the Copter, however before arming it needs to go through pre-arm checks which includes checking for a GPS lock, and an Extended Kalman Filter (EKF) algorithm to estimate vehicle position, velocity and angular orientation based on rate gyroscopes, accelerometer, compass, GPS, airspeed and barometric pressure measurements
 
@@ -69,5 +69,3 @@ The landing command is taken care off by the dronekit api, this can be initiated
     print "Close vehicle object"
     vehicle.close()
   
-## Resources 
-[Drone Kit](http://python.dronekit.io)
