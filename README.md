@@ -1,7 +1,7 @@
-Quadcopter - AutoMAV OF Project HEARTBEAT
-===================
+AutoMAV of Project HEARTBEAT
+==================
 
-
+Imparts intelligence and Autonomous behavior to a Quadcopter powered by Pixhawk and Pi3B. 
 
 Software Design
 ---------------
