@@ -16,7 +16,7 @@
 
 # Created by Siddhant Mahapatra (aka Robosid). for AutoMav of Project Heartbeat. 
 
-# This script will introduce multiple things:
+# This script will perform multiple things:
 # > Listener test
 # > Read and handle telemetry from the UAV
 # > Read and change parameters
