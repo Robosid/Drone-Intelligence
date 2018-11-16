@@ -1,3 +1,8 @@
+     https://github.com/Robosid/Drone-Intelligence/blob/master/License.pdf
+     https://github.com/Robosid/Drone-Intelligence/blob/master/License.rtf
+
+
+
 ##in QGC
 set parameters:
 Serial2_protocol=1
